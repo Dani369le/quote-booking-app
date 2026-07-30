@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Auto Detailing Quote & Booking</title>
+    <style>
+        :root {
+            --primary-color: #3182ce;
+            --primary-hover: #2b6cb0;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #1a365d;
+            --text-muted: #718096;
+            --border-color: #cbd5e0;
+            --error-color: #e53e3e;
+            --success-color: #2f855a;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .header h2 { 
+            color: var(--text-main); 
+            margin: 0 0 6px 0;
+            font-size: 22px;
+        }
+
+        .header p { 
+            color: var(--text-muted); 
+            font-size: 14px; 
+            margin-bottom: 24px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+
+        label { 
+            display: block; 
+            font-weight: 600; 
+            margin-bottom: 6px; 
+            color: #4a5568; 
+            font-size: 14px;
+        }
+
+        select, input[type="text"], input[type="email"], input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #2d3748;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+        }
+
+        .checkbox-group { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-top: 10px; 
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .price-box {
+            background-color: #ebf8ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-label {
+            font-size: 14px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .price-display { 
+            font-size: 26px; 
+            font-weight: 700; 
+            color: #2b6cb0; 
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+        }
+
+        button[type="submit"]:hover { background-color: var(--primary-hover); }
+        button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .error-msg {
+            background-color: #fff5f5;
+            color: var(--error-color);
+            border: 1px solid #fed7d7;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .success-msg { 
+            background-color: #f0fff4;
+            color: var(--success-color); 
+            border: 1px solid #c6f6d5;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 600; 
+            text-align: center; 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-card">
+    <div class="header">
+        <h2>Instant Quote & Booking</h2>
+        <p>Configure your service and select a preferred appointment date.</p>
+    </div>
+
+    <form id="quoteForm">
+        <div id="errorMessage" class="error-msg"></div>
+
+        <div class="form-group">
+            <label for="vehicleType">1. Select Vehicle Size</label>
+            <select id="vehicleType" required>
+                <option value="sedan">Sedan / Hatchback ($100)</option>
+                <option value="suv">SUV / Crossover ($130)</option>
+                <option value="truck">Large Truck / Van ($150)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="packageType">2. Select Service Package</label>
+            <select id="packageType" required>
+                <option value="basic">Standard Wash & Vacuum (+$50)</option>
+                <option value="premium">Full Interior & Exterior Detail (+$120)</option>
+                <option value="full_detail">Premium Ceramic Coat & Polish (+$200)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>3. Optional Add-ons</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="addonPet" name="addons" value="30">
+                <label for="addonPet" style="font-weight: normal; margin:0;">Pet Hair Removal (+$30)</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="addonHeadlight" name="addons" value="45">
+                <label for="addonHeadlight" style="font-weight: normal; margin:0;">Headlight Restoration (+$45)</label>
+            </div>
+        </div>
+
+        <div class="price-box">
+            <span class="price-label">Estimated Total:</span>
+            <span class="price-display" id="totalPrice">$150.00</span>
+        </div>
+
+        <div class="form-group">
+            <label for="clientName">Your Full Name</label>
+            <input type="text" id="clientName" autocomplete="name" required placeholder="John Doe">
+        </div>
+
+        <div class="form-group">
+            <label for="clientEmail">Your Email Address</label>
+            <input type="email" id="clientEmail" autocomplete="email" required placeholder="john@example.com">
+        </div>
+
+        <button type="submit" id="submitBtn">Lock In Quote & Request Booking</button>
+    </form>
+
+    <div id="successMessage" class="success-msg">
+        🎉 <strong>Quote Received!</strong><br>
+        We have reserved your request and emailed a confirmation summary.
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
